@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from bank_app import urls
 
+admin.site.site_header = 'Bank'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('bank/', include('bank_app.urls')),

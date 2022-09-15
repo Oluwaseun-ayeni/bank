@@ -38,7 +38,7 @@ class Employee(models.Model):
     is_manager = models.BooleanField()
 
 class OverDraftLog(models.Model):
-    account = models.OneToOneField(Account,on_delete=models.CASCADE)
+    account = models.ForeignKey(Account,on_delete=models.CASCADE)
     over_draft_date = models.DateTimeField(auto_now=True)
     over_draft_transaction_description = models.TextField()
 
@@ -51,10 +51,11 @@ class TranscationLog(models.Model):
     transaction_date = models.DateTimeField(auto_now=True)
     transaction_type = models.CharField(max_length=1, choices=TRANCTION_CHOICES)
     transaction_amount = models.DecimalField(max_digits=20, decimal_places=2)
+    transaction_fee_amount = models.DecimalField(max_digits=20, decimal_places=2)
     new_Balance = models.DecimalField(max_digits=20, decimal_places=2)
-    account = models.ForeignKey('Account',on_delete=models.SET_NULL,null=True)
-    customer = models.ForeignKey('Customer',on_delete=models.SET_NULL,null=True)
-    employee = models.ForeignKey('Employee',on_delete=models.SET_NULL,null=True)
+    account = models.ForeignKey('Account',on_delete=models.CASCADE)
+    customer = models.ForeignKey('Customer',on_delete=models.CASCADE)
+    employee = models.ForeignKey('Employee',on_delete=models.CASCADE)
 
 class SavingsInterestRates(models.Model):
     interest_rate_value = models.DecimalField(max_digits=20, decimal_places=2)
