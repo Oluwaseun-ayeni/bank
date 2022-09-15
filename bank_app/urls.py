@@ -7,3 +7,9 @@ urlpatterns = [
     path('update/<int:id>', views.update_customer),
     path('delete/<int:id>', views.delete_customer)
 ]
+
+
+urlpatterns = [
+    path('register/',views.register),
+    path('login/',views.login),
+]
