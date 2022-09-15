@@ -10,11 +10,14 @@ class Customer(models.Model):
     last_name = models.CharField(max_length=30)
     city = models.CharField(max_length=20)
     state = models.CharField(max_length=30, default='Lagos')
-    zip_code = models.IntegerField()
+    zip_code = models.CharField(max_length=5)
     email_address = models.EmailField()
     home_phone = models.CharField(max_length=15,null=True)
     cell_phone = models.CharField(max_length=15)
     work_phone = models.CharField(max_length=15,null=True)
+
+    def __str__(self):
+        return '%s %s %s %s ' %(self.first_name, self.last_name,self.cell_phone,self.email_address)
 
 class Account(models.Model):
     ACCOUNT_CHOICES = (
@@ -24,7 +27,7 @@ class Account(models.Model):
     )
     current_balance = models.DecimalField(max_digits=20, decimal_places=2)
     account_status_type = models.OneToOneField("AccountStatusType",on_delete=models.SET_NULL,null=True)
-    customer = models.ManyToManyField(Customer)
+    customer = models.ForeignKey('Customer', on_delete=models.CASCADE)
     account_type = models.CharField(max_length=1, choices=ACCOUNT_CHOICES)
     interest_savings_rate = models.OneToOneField('SavingsInterestRates', on_delete=models.PROTECT)
 
@@ -53,9 +56,11 @@ class TranscationLog(models.Model):
     transaction_amount = models.DecimalField(max_digits=20, decimal_places=2)
     new_Balance = models.DecimalField(max_digits=20, decimal_places=2)
     account = models.ForeignKey('Account',on_delete=models.SET_NULL,null=True)
-    customer = models.ForeignKey('Customer',on_delete=models.SET_NULL,null=True)
+    customer = models.ForeignKey('Customer',on_delete=models.CASCADE,null=True)
     employee = models.ForeignKey('Employee',on_delete=models.SET_NULL,null=True)
 
 class SavingsInterestRates(models.Model):
     interest_rate_value = models.DecimalField(max_digits=20, decimal_places=2)
     interest_rate_description = models.TextField()
+
+
