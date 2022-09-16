@@ -8,18 +8,15 @@ from rest_framework import serializers
 
 
 @api_view(['GET','POST'])
-def customer(request,format=None):
-
+def customer(request, pk, format=None):
     if request.method == 'GET':
-        customer = Customer.objects.all()
+        customer = Customer.objects.filter(id=pk)
         serializer = CustomerSerializers(customer, many=True)
         return Response(serializer.data)
     
 
-
 @api_view(['POST'])
 def create_customer(request, format=None):
-
     if request.method == 'POST':
         customer = CustomerSerializers(data=request.data)
 
@@ -61,17 +58,6 @@ def delete_customer(request,id,format=None):
         customer.delete()
     return Response(status=status.HTTP_202_ACCEPTED)
 
-
-
-
-
-from django.contrib.auth import login,authenticate
-from django.http import HttpResponse
-import rest_framework
-# Create your views here.
-
-def register(request):
-    return HttpResponse("<h1>Account successfully created </h1>")
 
 def login_view(request):
     username = request.POST['username']
