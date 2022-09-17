@@ -13,6 +13,7 @@ class Customer(models.Model):
     state = models.CharField(max_length=30, default='Lagos')
     zip_code = models.CharField(max_length=6)
     email_address = models.EmailField(unique=True)
+    password = models.CharField(max_length=255,default='')
     home_phone = models.CharField(max_length=15, null=True)
     cell_phone = models.CharField(max_length=15)
     work_phone = models.CharField(max_length=15, null=True)
@@ -42,6 +43,11 @@ class Employee(models.Model):
     middle_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     is_manager = models.BooleanField()
+    email_address = models.EmailField(unique=True,default='')
+    password = models.CharField(max_length=255,default='')
+    home_phone = models.CharField(max_length=15, null=True)
+    cell_phone = models.CharField(max_length=15,default='')
+    work_phone = models.CharField(max_length=15, null=True)
 
 
 class OverDraftLog(models.Model):
